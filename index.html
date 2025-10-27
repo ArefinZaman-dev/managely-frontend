@@ -1,0 +1,1118 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Managely - Employee Management System (Bangladesh)</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Fallback styles in case external resources fail -->
+  <style id="fallback-styles">
+        /* Fallback font stack */
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important; }
+        
+        /* Fallback icons using Unicode symbols */
+        .fa-building::before { content: '🏢'; font-family: inherit; }
+        .fa-envelope::before { content: '✉️'; font-family: inherit; }
+        .fa-lock::before { content: '🔒'; font-family: inherit; }
+        .fa-moon::before { content: '🌙'; font-family: inherit; }
+        .fa-sun::before { content: '☀️'; font-family: inherit; }
+        .fa-bars::before { content: '☰'; font-family: inherit; }
+        .fa-search::before { content: '🔍'; font-family: inherit; }
+        .fa-bell::before { content: '🔔'; font-family: inherit; }
+        .fa-chevron-down::before { content: '▼'; font-family: inherit; }
+        .fa-tachometer-alt::before { content: '📊'; font-family: inherit; }
+        .fa-users::before { content: '👥'; font-family: inherit; }
+        .fa-calendar-check::before { content: '📅'; font-family: inherit; }
+        .fa-money-bill-wave::before { content: '💰'; font-family: inherit; }
+        .fa-calendar-times::before { content: '📅'; font-family: inherit; }
+        .fa-chart-line::before { content: '📈'; font-family: inherit; }
+        .fa-project-diagram::before { content: '📋'; font-family: inherit; }
+        .fa-file-alt::before { content: '📄'; font-family: inherit; }
+        .fa-cog::before { content: '⚙️'; font-family: inherit; }
+        .fa-life-ring::before { content: '🆘'; font-family: inherit; }
+        .fa-plus::before { content: '+'; font-family: inherit; }
+        .fa-code::before { content: '💻'; font-family: inherit; }
+        .fa-bullhorn::before { content: '📢'; font-family: inherit; }
+        .fa-user-plus::before { content: '👤+'; font-family: inherit; }
+        .fa-tasks::before { content: '🗒️'; font-family: inherit; }
+    </style>
+  <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .dark {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border-color: #475569;
+        }
+        
+        .light {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+        }
+        
+        .theme-bg-primary { background-color: var(--bg-primary); }
+        .theme-bg-secondary { background-color: var(--bg-secondary); }
+        .theme-bg-tertiary { background-color: var(--bg-tertiary); }
+        .theme-text-primary { color: var(--text-primary); }
+        .theme-text-secondary { color: var(--text-secondary); }
+        .theme-border { border-color: var(--border-color); }
+        
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .login-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .dark .stat-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border: 1px solid #475569;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 2px 0;
+        }
+        
+        .nav-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateX(4px);
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active { background: #dcfce7; color: #166534; }
+        .status-inactive { background: #fee2e2; color: #991b1b; }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        
+        .dark .status-active { background: #166534; color: #dcfce7; }
+        .dark .status-inactive { background: #991b1b; color: #fee2e2; }
+        .dark .status-pending { background: #92400e; color: #fef3c7; }
+        
+        .table-row { transition: background-color 0.2s ease; }
+        .table-row:hover { background-color: rgba(59, 130, 246, 0.05); }
+        .dark .table-row:hover { background-color: rgba(59, 130, 246, 0.1); }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="light theme-bg-secondary">
+  <!-- Login Page -->
+  <div id="login-page" class="min-h-full login-bg flex items-center justify-center p-4">
+   <div class="max-w-md w-full">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 fade-in">
+     <!-- Company Logo -->
+     <div class="text-center mb-8">
+      <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4"><i class="fas fa-building text-white text-2xl"></i></div>
+      <h1 id="company-name-login" class="text-2xl font-bold text-gray-900">Managely</h1>
+      <p id="company-tagline-login" class="text-gray-600 text-sm">Empowering Excellence in Bangladesh</p>
+     </div>
+     <!-- Login Form -->
+     <form id="login-form" class="space-y-6">
+      <div>
+       <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+       <div class="relative">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="fas fa-envelope text-gray-400"></i></div>
+        <input type="email" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="admin@managely.com">
+       </div>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+       <div class="relative">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="fas fa-lock text-gray-400"></i></div>
+        <input type="password" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="••••••••">
+       </div>
+      </div>
+      <div class="flex items-center justify-between">
+       <div class="flex items-center">
+        <input type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+        <label class="ml-2 block text-sm text-gray-700">Remember me</label>
+       </div>
+       <a href="#" class="text-sm text-blue-600 hover:text-blue-500">Forgot password?</a>
+      </div>
+      <button type="submit" class="w-full btn-primary text-white font-semibold py-3 px-4 rounded-lg"> Sign In </button>
+     </form>
+     <!-- Theme Toggle -->
+     <div class="mt-6 text-center">
+      <button id="theme-toggle-login" class="text-gray-500 hover:text-gray-700"><i class="fas fa-moon"></i> Dark Mode </button>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <!-- Main Application -->
+  <div id="main-app" class="hidden min-h-full theme-bg-secondary">
+   <!-- Top Navigation -->
+   <nav class="theme-bg-primary theme-border border-b px-6 py-4 fixed w-full top-0 z-40">
+    <div class="flex items-center justify-between">
+     <div class="flex items-center space-x-4">
+      <button id="sidebar-toggle" class="md:hidden theme-text-primary"><i class="fas fa-bars text-xl"></i></button>
+      <div class="flex items-center space-x-3">
+       <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"><i class="fas fa-building text-white text-sm"></i></div>
+       <div>
+        <h1 id="company-name-nav" class="font-bold theme-text-primary">Managely</h1>
+        <p class="text-xs theme-text-secondary">Employee Management</p>
+       </div>
+      </div>
+     </div>
+     <div class="flex items-center space-x-4">
+      <!-- Search Bar -->
+      <div class="hidden md:block relative">
+       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="fas fa-search theme-text-secondary"></i></div>
+       <input type="text" class="theme-bg-secondary theme-border border pl-10 pr-4 py-2 rounded-lg w-64 focus:ring-2 focus:ring-blue-500" placeholder="Search employees...">
+      </div>
+      <!-- Notifications -->
+      <button class="relative theme-text-secondary hover:theme-text-primary"><i class="fas fa-bell text-xl"></i><span class="notification-dot pulse-dot"></span></button>
+      <!-- Theme Toggle -->
+      <button id="theme-toggle" class="theme-text-secondary hover:theme-text-primary"><i class="fas fa-moon text-xl"></i></button>
+      <!-- Profile Dropdown -->
+      <div class="relative">
+       <button id="profile-dropdown" class="flex items-center space-x-2 theme-text-primary">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%233b82f6'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EAD%3C/text%3E%3C/svg%3E" alt="Profile" class="w-8 h-8 rounded-full">
+        <div class="hidden md:block text-left">
+         <p id="admin-name-nav" class="text-sm font-medium">Admin</p>
+         <!-- per request: show only Admin text, no personal name -->
+         <p id="admin-title-nav" class="text-xs theme-text-secondary" style="display:none;"></p>
+        </div>
+        <i class="fas fa-chevron-down text-sm"></i>
+       </button>
+       <div id="profile-menu" class="hidden absolute right-0 mt-2 w-48 theme-bg-primary rounded-lg shadow-lg border theme-border">
+        <a href="#" class="block px-4 py-2 text-sm theme-text-primary hover:bg-gray-100 dark:hover:bg-gray-700">Profile Settings</a>
+        <a href="#" class="block px-4 py-2 text-sm theme-text-primary hover:bg-gray-100 dark:hover:bg-gray-700">Account</a>
+        <hr class="theme-border">
+        <a href="#" id="logout-btn" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </nav>
+
+   <!-- Sidebar -->
+   <aside id="sidebar" class="fixed left-0 top-16 h-full w-64 theme-bg-primary theme-border border-r sidebar-transition z-30">
+    <div class="p-4">
+     <nav class="space-y-1">
+      <a href="#" class="nav-item active flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="dashboard"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="employees"><i class="fas fa-users w-5"></i><span>Employees</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="departments"><i class="fas fa-building w-5"></i><span>Departments</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="attendance"><i class="fas fa-calendar-check w-5"></i><span>Attendance</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="payroll"><i class="fas fa-money-bill-wave w-5"></i><span>Payroll</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="leave"><i class="fas fa-calendar-times w-5"></i><span>Leave Management</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="performance"><i class="fas fa-chart-line w-5"></i><span>Performance</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="projects"><i class="fas fa-project-diagram w-5"></i><span>Projects</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="reports"><i class="fas fa-file-alt w-5"></i><span>Reports</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="settings"><i class="fas fa-cog w-5"></i><span>Settings</span></a>
+      <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 theme-text-primary" data-page="support"><i class="fas fa-life-ring w-5"></i><span>Support</span></a>
+     </nav>
+    </div>
+   </aside>
+
+   <!-- Main Content -->
+   <main id="main-content" class="ml-0 md:ml-64 pt-16 min-h-full">
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="p-6">
+     <div class="mb-6">
+      <h1 class="text-3xl font-bold theme-text-primary">Dashboard</h1>
+      <p class="theme-text-secondary">Welcome back! Here's what's happening at your company in Bangladesh.</p>
+     </div>
+     <!-- Stats Cards (UPDATED to 4 employees) -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+      <div class="stat-card rounded-xl p-6 card-hover">
+       <div class="flex items-center justify-between">
+        <div>
+         <p class="text-sm theme-text-secondary">Total Employees</p>
+         <p class="text-3xl font-bold theme-text-primary">4</p>
+         <p class="text-sm text-green-600">No change this month</p>
+        </div>
+        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center"><i class="fas fa-users text-blue-600 text-xl"></i></div>
+       </div>
+      </div>
+      <div class="stat-card rounded-xl p-6 card-hover">
+       <div class="flex items-center justify-between">
+        <div>
+         <p class="text-sm theme-text-secondary">Active Departments</p>
+         <p class="text-3xl font-bold theme-text-primary">3</p>
+         <p class="text-sm text-green-600">Stable</p>
+        </div>
+        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center"><i class="fas fa-building text-green-600 text-xl"></i></div>
+       </div>
+      </div>
+      <div class="stat-card rounded-xl p-6 card-hover">
+       <div class="flex items-center justify-between">
+        <div>
+         <p class="text-sm theme-text-secondary">Monthly Payroll</p>
+         <p class="text-3xl font-bold theme-text-primary">৳210,000</p>
+         <p class="text-sm text-green-600">+2% vs last month</p>
+        </div>
+        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center"><i class="fas fa-money-bill-wave text-purple-600 text-xl"></i></div>
+       </div>
+      </div>
+      <div class="stat-card rounded-xl p-6 card-hover">
+       <div class="flex items-center justify-between">
+        <div>
+         <p class="text-sm theme-text-secondary">Attendance Rate</p>
+         <p class="text-3xl font-bold theme-text-primary">94.2%</p>
+         <p class="text-sm text-green-600">+1.2% from last week</p>
+        </div>
+        <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center"><i class="fas fa-calendar-check text-yellow-600 text-xl"></i></div>
+       </div>
+      </div>
+      <div class="stat-card rounded-xl p-6 card-hover">
+       <div class="flex items-center justify-between">
+        <div>
+         <p class="text-sm theme-text-secondary">On Leave Today</p>
+         <p class="text-3xl font-bold theme-text-primary">1</p>
+         <p class="text-sm theme-text-secondary">Across all departments</p>
+        </div>
+        <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center"><i class="fas fa-calendar-times text-red-600 text-xl"></i></div>
+       </div>
+      </div>
+     </div>
+
+     <!-- Charts Section -->
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+       <h3 class="text-lg font-semibold theme-text-primary mb-4">Attendance Overview</h3>
+       <div class="chart-container">
+        <canvas id="attendanceChart"></canvas>
+       </div>
+      </div>
+      <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+       <h3 class="text-lg font-semibold theme-text-primary mb-4">Department Distribution</h3>
+       <div class="chart-container">
+        <canvas id="departmentChart"></canvas>
+       </div>
+      </div>
+     </div>
+
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+       <h3 class="text-lg font-semibold theme-text-primary mb-4">Monthly Salary Expenditure (BDT)</h3>
+       <div class="chart-container">
+        <canvas id="salaryChart"></canvas>
+       </div>
+      </div>
+      <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+       <h3 class="text-lg font-semibold theme-text-primary mb-4">Recent Activity</h3>
+       <div class="space-y-4">
+        <div class="flex items-center space-x-3 p-3 theme-bg-secondary rounded-lg">
+         <div class="w-8 h-8 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center"><i class="fas fa-code text-indigo-600 text-sm"></i></div>
+         <div class="flex-1">
+          <p class="text-sm font-medium theme-text-primary">PR merged</p>
+          <p class="text-xs theme-text-secondary">by Shaikh Arefin Zaman</p>
+         </div>
+         <span class="text-xs theme-text-secondary">2 hours ago</span>
+        </div>
+        <div class="flex items-center space-x-3 p-3 theme-bg-secondary rounded-lg">
+         <div class="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center"><i class="fas fa-tasks text-green-600 text-sm"></i></div>
+         <div class="flex-1">
+          <p class="text-sm font-medium theme-text-primary">Task assigned</p>
+          <p class="text-xs theme-text-secondary">Sprint task assigned to Shaikh Arefin Zaman</p>
+         </div>
+         <span class="text-xs theme-text-secondary">1 hour ago</span>
+        </div>
+        <div class="flex items-center space-x-3 p-3 theme-bg-secondary rounded-lg">
+         <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center"><i class="fas fa-calendar-check text-blue-600 text-sm"></i></div>
+         <div class="flex-1">
+          <p class="text-sm font-medium theme-text-primary">Leave request approved</p>
+          <p class="text-xs theme-text-secondary">Jannatul Ferdous on casual leave</p>
+         </div>
+         <span class="text-xs theme-text-secondary">4 hours ago</span>
+        </div>
+        <div class="flex items-center space-x-3 p-3 theme-bg-secondary rounded-lg">
+         <div class="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center"><i class="fas fa-project-diagram text-purple-600 text-sm"></i></div>
+         <div class="flex-1">
+          <p class="text-sm font-medium theme-text-primary">Project milestone achieved</p>
+          <p class="text-xs theme-text-secondary">Engineering shipped payroll export for BDT</p>
+         </div>
+         <span class="text-xs theme-text-secondary">1 day ago</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+
+    <!-- Employees Page -->
+    <div id="employees-page" class="p-6 hidden">
+     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+      <div>
+       <h1 class="text-3xl font-bold theme-text-primary">Employees</h1>
+       <p class="theme-text-secondary">Manage your company's workforce</p>
+      </div>
+      <button id="add-employee-btn" class="btn-primary text-white px-6 py-3 rounded-lg font-medium flex items-center space-x-2"><i class="fas fa-plus"></i><span>Add New Employee</span></button>
+     </div>
+     <!-- Filters -->
+     <div class="theme-bg-primary rounded-xl p-6 mb-6 theme-border border">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+       <div class="relative">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="fas fa-search theme-text-secondary"></i></div>
+        <input type="text" class="theme-bg-secondary theme-border border pl-10 pr-4 py-2 rounded-lg w-full" placeholder="Search employees...">
+       </div>
+       <select class="theme-bg-secondary theme-border border px-4 py-2 rounded-lg theme-text-primary">
+        <option>All Departments</option>
+        <option>Engineering</option>
+        <option>Marketing</option>
+        <option>Sales</option>
+       </select>
+       <select class="theme-bg-secondary theme-border border px-4 py-2 rounded-lg theme-text-primary">
+        <option>All Positions</option>
+        <option>Manager</option>
+        <option>Senior</option>
+        <option>Junior</option>
+        <option>Intern</option>
+       </select>
+       <select class="theme-bg-secondary theme-border border px-4 py-2 rounded-lg theme-text-primary">
+        <option>All Status</option>
+        <option>Active</option>
+        <option>Inactive</option>
+        <option>On Leave</option>
+       </select>
+      </div>
+     </div>
+     <!-- Employee Table (UPDATED: SAZ realistic details) -->
+     <div class="theme-bg-primary rounded-xl theme-border border overflow-hidden">
+      <div class="overflow-x-auto">
+       <table class="w-full">
+        <thead class="theme-bg-secondary">
+         <tr>
+          <th class="text-left py-4 px-6 theme-text-primary font-medium">Employee</th>
+          <th class="text-left py-4 px-6 theme-text-primary font-medium">Contact</th>
+          <th class="text-left py-4 px-6 theme-text-primary font-medium">Department</th>
+          <th class="text-left py-4 px-6 theme-text-primary font-medium">Position</th>
+          <th class="text-left py-4 px-6 theme-text-primary font-medium">Joining Date</th>
+          <th class="text-left py-4 px-6 theme-text-primary font-medium">Status</th>
+          <th class="text-left py-4 px-6 theme-text-primary font-medium">Actions</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="table-row theme-border border-b">
+          <td class="py-4 px-6">
+           <div class="flex items-center space-x-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%233b82f6'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EUH%3C/text%3E%3C/svg%3E" alt="Profile" class="w-10 h-10 rounded-full">
+            <div>
+             <p class="font-medium theme-text-primary">Umme Habiba</p>
+             <p class="text-sm theme-text-secondary">EMP001</p>
+            </div>
+           </div>
+          </td>
+          <td class="py-4 px-6">
+           <div>
+            <p class="theme-text-primary">umme.habiba@managely.com</p>
+            <p class="text-sm theme-text-secondary">+880-1309-970845</p>
+           </div>
+          </td>
+          <td class="py-4 px-6 theme-text-primary">Engineering</td>
+          <td class="py-4 px-6 theme-text-primary">Senior Developer</td>
+          <td class="py-4 px-6 theme-text-primary">Jan 15, 2022</td>
+          <td class="py-4 px-6"><span class="status-badge status-active">Active</span></td>
+          <td class="py-4 px-6">
+           <div class="flex space-x-2">
+            <button class="text-blue-600 hover:text-blue-800 text-sm">View</button>
+            <button class="text-green-600 hover:text-green-800 text-sm">Edit</button>
+            <button class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+           </div>
+          </td>
+         </tr>
+         <tr class="table-row theme-border border-b">
+          <td class="py-4 px-6">
+           <div class="flex items-center space-x-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%2310b981'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EJF%3C/text%3E%3C/svg%3E" alt="Profile" class="w-10 h-10 rounded-full">
+            <div>
+             <p class="font-medium theme-text-primary">Jannatul Ferdous</p>
+             <p class="text-sm theme-text-secondary">EMP002</p>
+            </div>
+           </div>
+          </td>
+          <td class="py-4 px-6">
+           <div>
+            <p class="theme-text-primary">jannatul.ferdous@managely.com</p>
+            <p class="text-sm theme-text-secondary">+880-1309-970762</p>
+           </div>
+          </td>
+          <td class="py-4 px-6 theme-text-primary">Marketing</td>
+          <td class="py-4 px-6 theme-text-primary">Marketing Manager</td>
+          <td class="py-4 px-6 theme-text-primary">Mar 10, 2021</td>
+          <td class="py-4 px-6"><span class="status-badge status-pending">On Leave</span></td>
+          <td class="py-4 px-6">
+           <div class="flex space-x-2">
+            <button class="text-blue-600 hover:text-blue-800 text-sm">View</button>
+            <button class="text-green-600 hover:text-green-800 text-sm">Edit</button>
+            <button class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+           </div>
+          </td>
+         </tr>
+         <tr class="table-row theme-border border-b">
+          <td class="py-4 px-6">
+           <div class="flex items-center space-x-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23f59e0b'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3EAA%3C/text%3E%3C/svg%3E" alt="Profile" class="w-10 h-10 rounded-full">
+            <div>
+             <p class="font-medium theme-text-primary">Arefa Apy</p>
+             <p class="text-sm theme-text-secondary">EMP003</p>
+            </div>
+           </div>
+          </td>
+          <td class="py-4 px-6">
+           <div>
+            <p class="theme-text-primary">arefa.apy@managely.com</p>
+            <p class="text-sm theme-text-secondary">+880-1309-970391</p>
+           </div>
+          </td>
+          <td class="py-4 px-6 theme-text-primary">Sales</td>
+          <td class="py-4 px-6 theme-text-primary">Sales Representative</td>
+          <td class="py-4 px-6 theme-text-primary">Jun 20, 2023</td>
+          <td class="py-4 px-6"><span class="status-badge status-active">Active</span></td>
+          <td class="py-4 px-6">
+           <div class="flex space-x-2">
+            <button class="text-blue-600 hover:text-blue-800 text-sm">View</button>
+            <button class="text-green-600 hover:text-green-800 text-sm">Edit</button>
+            <button class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+           </div>
+          </td>
+         </tr>
+         <!-- NEW: Shaikh Arefin Zaman (Realistic role) -->
+         <tr class="table-row theme-border border-b">
+          <td class="py-4 px-6">
+           <div class="flex items-center space-x-3">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23634eea'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-family='Arial' font-size='16' font-weight='bold'%3ESZ%3C/text%3E%3C/svg%3E" alt="Profile" class="w-10 h-10 rounded-full">
+            <div>
+             <p class="font-medium theme-text-primary">Shaikh Arefin Zaman</p>
+             <p class="text-sm theme-text-secondary">EMP004</p>
+            </div>
+           </div>
+          </td>
+          <td class="py-4 px-6">
+           <div>
+            <p class="theme-text-primary">shaikh.arefin@managely.com</p>
+            <p class="text-sm theme-text-secondary">+880-1700-456789</p>
+           </div>
+          </td>
+          <td class="py-4 px-6 theme-text-primary">Engineering</td>
+          <td class="py-4 px-6 theme-text-primary">Software Engineer</td>
+          <td class="py-4 px-6 theme-text-primary">Jun 12, 2024</td>
+          <td class="py-4 px-6">
+            <span class="status-badge status-active flex items-center gap-2">Active
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 pulse-dot" title="Present"></span>
+            </span>
+          </td>
+          <td class="py-4 px-6">
+           <div class="flex space-x-2">
+            <button class="text-blue-600 hover:text-blue-800 text-sm">View</button>
+            <button class="text-green-600 hover:text-green-800 text-sm">Edit</button>
+            <button class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+           </div>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <!-- Pagination (updated) -->
+      <div class="theme-bg-secondary px-6 py-4 flex items-center justify-between">
+       <div class="text-sm theme-text-secondary">Showing 1 to 4 of 4 results</div>
+       <div class="flex space-x-2">
+        <button class="px-3 py-1 text-sm theme-text-secondary hover:theme-text-primary" disabled>Previous</button>
+        <button class="px-3 py-1 text-sm bg-blue-600 text-white rounded">1</button>
+        <button class="px-3 py-1 text-sm theme-text-secondary hover:theme-text-primary" disabled>2</button>
+        <button class="px-3 py-1 text-sm theme-text-secondary hover:theme-text-primary" disabled>3</button>
+        <button class="px-3 py-1 text-sm theme-text-secondary hover:theme-text-primary" disabled>Next</button>
+       </div>
+      </div>
+     </div>
+    </div>
+
+    <!-- Departments Page (Engineering now 2 employees) -->
+    <div id="departments-page" class="p-6 hidden">
+     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+      <div>
+       <h1 class="text-3xl font-bold theme-text-primary">Departments</h1>
+       <p class="theme-text-secondary">Manage organizational departments</p>
+      </div>
+      <button class="btn-primary text-white px-6 py-3 rounded-lg font-medium flex items-center space-x-2"><i class="fas fa-plus"></i><span>Add Department</span></button>
+     </div>
+
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div class="theme-bg-primary rounded-xl p-6 theme-border border card-hover">
+       <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center"><i class="fas fa-code text-blue-600 text-xl"></i></div>
+        <div class="flex space-x-2">
+         <button class="text-blue-600 hover:text-blue-800 text-sm">Edit</button>
+         <button class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+        </div>
+       </div>
+       <h3 class="text-lg font-semibold theme-text-primary mb-2">Engineering</h3>
+       <p class="text-sm theme-text-secondary mb-4">Software development and technical operations</p>
+       <div class="flex items-center justify-between">
+        <div>
+         <p class="text-2xl font-bold theme-text-primary">2</p>
+         <p class="text-sm theme-text-secondary">Employees</p>
+        </div>
+        <div class="text-right">
+         <p class="text-sm font-medium theme-text-primary">Umme Habiba</p>
+         <p class="text-xs theme-text-secondary">Department Head</p>
+        </div>
+       </div>
+      </div>
+
+      <div class="theme-bg-primary rounded-xl p-6 theme-border border card-hover">
+       <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center"><i class="fas fa-bullhorn text-green-600 text-xl"></i></div>
+        <div class="flex space-x-2">
+         <button class="text-blue-600 hover:text-blue-800 text-sm">Edit</button>
+         <button class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+        </div>
+       </div>
+       <h3 class="text-lg font-semibold theme-text-primary mb-2">Marketing</h3>
+       <p class="text-sm theme-text-secondary mb-4">Brand promotion and customer engagement</p>
+       <div class="flex items-center justify-between">
+        <div>
+         <p class="text-2xl font-bold theme-text-primary">1</p>
+         <p class="text-sm theme-text-secondary">Employees</p>
+        </div>
+        <div class="text-right">
+         <p class="text-sm font-medium theme-text-primary">Jannatul Ferdous</p>
+         <p class="text-xs theme-text-secondary">Department Head</p>
+        </div>
+       </div>
+      </div>
+
+      <div class="theme-bg-primary rounded-xl p-6 theme-border border card-hover">
+       <div class="flex items-center justify-between mb-4">
+        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center"><i class="fas fa-chart-line text-purple-600 text-xl"></i></div>
+        <div class="flex space-x-2">
+         <button class="text-blue-600 hover:text-blue-800 text-sm">Edit</button>
+         <button class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+        </div>
+       </div>
+       <h3 class="text-lg font-semibold theme-text-primary mb-2">Sales</h3>
+       <p class="text-sm theme-text-secondary mb-4">Revenue generation and client relations</p>
+       <div class="flex items-center justify-between">
+        <div>
+         <p class="text-2xl font-bold theme-text-primary">1</p>
+         <p class="text-sm theme-text-secondary">Employees</p>
+        </div>
+        <div class="text-right">
+         <p class="text-sm font-medium theme-text-primary">Arefa Apy</p>
+         <p class="text-xs theme-text-secondary">Department Head</p>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     <!-- Department Performance Chart -->
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <h3 class="text-lg font-semibold theme-text-primary mb-4">Department Performance</h3>
+      <div class="chart-container">
+       <canvas id="departmentPerformanceChart"></canvas>
+      </div>
+     </div>
+    </div>
+
+    <!-- Attendance Page -->
+    <div id="attendance-page" class="p-6 hidden">
+     <h1 class="text-3xl font-bold theme-text-primary mb-6">Attendance Management</h1>
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <p class="theme-text-secondary">Attendance tracking and management features would be implemented here.</p>
+     </div>
+    </div>
+
+    <!-- Payroll Page -->
+    <div id="payroll-page" class="p-6 hidden">
+     <h1 class="text-3xl font-bold theme-text-primary mb-6">Payroll Management</h1>
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <p class="theme-text-secondary">Payroll processing and salary management features would be implemented here. All amounts shown in Bangladeshi Taka (BDT).</p>
+     </div>
+    </div>
+
+    <!-- Leave Page -->
+    <div id="leave-page" class="p-6 hidden">
+     <h1 class="text-3xl font-bold theme-text-primary mb-6">Leave Management</h1>
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <p class="theme-text-secondary">Leave request and approval system would be implemented here.</p>
+     </div>
+    </div>
+
+    <!-- Performance Page -->
+    <div id="performance-page" class="p-6 hidden">
+     <h1 class="text-3xl font-bold theme-text-primary mb-6">Performance Management</h1>
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <p class="theme-text-secondary">Employee performance tracking and evaluation features would be implemented here.</p>
+     </div>
+    </div>
+
+    <!-- Projects Page -->
+    <div id="projects-page" class="p-6 hidden">
+     <h1 class="text-3xl font-bold theme-text-primary mb-6">Project Management</h1>
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <p class="theme-text-secondary">Project tracking and team assignment features would be implemented here.</p>
+     </div>
+    </div>
+
+    <!-- Reports Page -->
+    <div id="reports-page" class="p-6 hidden">
+     <h1 class="text-3xl font-bold theme-text-primary mb-6">Reports & Analytics</h1>
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <p class="theme-text-secondary">Comprehensive reporting and analytics dashboard would be implemented here.</p>
+     </div>
+    </div>
+
+    <!-- Settings Page -->
+    <div id="settings-page" class="p-6 hidden">
+     <h1 class="text-3xl font-bold theme-text-primary mb-6">Settings</h1>
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <p class="theme-text-secondary">System configuration and user preferences would be implemented here.</p>
+     </div>
+    </div>
+
+    <!-- Support Page -->
+    <div id="support-page" class="p-6 hidden">
+     <h1 class="text-3xl font-bold theme-text-primary mb-6">Support & Help</h1>
+     <div class="theme-bg-primary rounded-xl p-6 theme-border border">
+      <p class="theme-text-secondary">Help documentation and support contact features would be implemented here.</p>
+     </div>
+    </div>
+   </main>
+  </div>
+
+  <!-- Add Employee Modal -->
+  <div id="employee-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 modal-backdrop">
+   <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="theme-bg-primary rounded-xl shadow-2xl max-w-4xl w-full max-h-screen overflow-y-auto fade-in theme-border border">
+     <div class="px-8 py-6 border-b theme-border">
+      <h3 class="text-2xl font-bold theme-text-primary">Add New Employee</h3>
+     </div>
+     <form class="p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <div>
+        <label class="block text-sm font-medium theme-text-primary mb-2">Full Name</label>
+        <input type="text" class="w-full theme-bg-secondary theme-border border rounded-lg px-4 py-3 theme-text-primary focus:ring-2 focus:ring-blue-500">
+       </div>
+       <div>
+        <label class="block text-sm font-medium theme-text-primary mb-2">Employee ID</label>
+        <input type="text" class="w-full theme-bg-secondary theme-border border rounded-lg px-4 py-3 theme-text-primary focus:ring-2 focus:ring-blue-500">
+       </div>
+       <div>
+        <label class="block text-sm font-medium theme-text-primary mb-2">Email Address</label>
+        <input type="email" class="w-full theme-bg-secondary theme-border border rounded-lg px-4 py-3 theme-text-primary focus:ring-2 focus:ring-blue-500">
+       </div>
+       <div>
+        <label class="block text-sm font-medium theme-text-primary mb-2">Phone Number</label>
+        <input type="tel" class="w-full theme-bg-secondary theme-border border rounded-lg px-4 py-3 theme-text-primary focus:ring-2 focus:ring-blue-500" placeholder="+880-1XXXXXXXXX">
+       </div>
+       <div>
+        <label class="block text-sm font-medium theme-text-primary mb-2">Department</label>
+        <select class="w-full theme-bg-secondary theme-border border rounded-lg px-4 py-3 theme-text-primary focus:ring-2 focus:ring-blue-500">
+         <option>Select Department</option>
+         <option>Engineering</option>
+         <option>Marketing</option>
+         <option>Sales</option>
+        </select>
+       </div>
+       <div>
+        <label class="block text-sm font-medium theme-text-primary mb-2">Position</label>
+        <input type="text" class="w-full theme-bg-secondary theme-border border rounded-lg px-4 py-3 theme-text-primary focus:ring-2 focus:ring-blue-500">
+       </div>
+       <div>
+        <label class="block text-sm font-medium theme-text-primary mb-2">Salary (BDT)</label>
+        <input type="number" class="w-full theme-bg-secondary theme-border border rounded-lg px-4 py-3 theme-text-primary focus:ring-2 focus:ring-blue-500" placeholder="e.g., 70000">
+       </div>
+       <div>
+        <label class="block text-sm font-medium theme-text-primary mb-2">Joining Date</label>
+        <input type="date" class="w-full theme-bg-secondary theme-border border rounded-lg px-4 py-3 theme-text-primary focus:ring-2 focus:ring-blue-500">
+       </div>
+      </div>
+      <div class="flex justify-end gap-4 mt-8 pt-6 border-t theme-border">
+       <button type="button" id="cancel-employee-btn" class="px-6 py-3 theme-text-secondary theme-bg-secondary hover:theme-bg-tertiary rounded-lg transition-colors">Cancel</button>
+       <button type="submit" class="px-8 py-3 btn-primary text-white rounded-lg transition-colors">Save Employee</button>
+      </div>
+     </form>
+    </div>
+   </div>
+  </div>
+
+  <script>
+        // Default configuration (UPDATED: show only 'Admin')
+        const defaultConfig = {
+            company_name: "Managely",
+            company_tagline: "Empowering Excellence in Bangladesh",
+            admin_name: "Admin", // name removed per request
+            admin_title: "" // hide title line
+        };
+
+        // Element SDK implementation
+        const element = {
+            defaultConfig,
+            render: async (config) => {
+                // Update company name in all locations
+                const companyNameElements = [ 'company-name-login', 'company-name-nav' ];
+                companyNameElements.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = config.company_name || defaultConfig.company_name;
+                    }
+                });
+
+                // Update company tagline
+                const taglineElement = document.getElementById('company-tagline-login');
+                if (taglineElement) {
+                    taglineElement.textContent = config.company_tagline || defaultConfig.company_tagline;
+                }
+
+                // Update admin name and title
+                const adminNameElement = document.getElementById('admin-name-nav');
+                if (adminNameElement) {
+                    adminNameElement.textContent = (config.admin_name ?? defaultConfig.admin_name) || 'Admin';
+                }
+
+                const adminTitleElement = document.getElementById('admin-title-nav');
+                if (adminTitleElement) {
+                    const titleText = config.admin_title ?? defaultConfig.admin_title;
+                    adminTitleElement.textContent = titleText;
+                    adminTitleElement.style.display = titleText ? 'block' : 'none';
+                }
+            },
+            mapToCapabilities: (config) => ({
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            }),
+            mapToEditPanelValues: (config) => new Map([
+                ["company_name", config.company_name || defaultConfig.company_name],
+                ["company_tagline", config.company_tagline || defaultConfig.company_tagline],
+                ["admin_name", (config.admin_name ?? defaultConfig.admin_name) || 'Admin'],
+                ["admin_title", config.admin_title ?? defaultConfig.admin_title]
+            ])
+        };
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init(element);
+        }
+
+        // Theme management
+        let isDarkMode = false;
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const themeIcons = document.querySelectorAll('#theme-toggle i, #theme-toggle-login i');
+            if (isDarkMode) {
+                body.classList.remove('light');
+                body.classList.add('dark');
+                themeIcons.forEach(icon => { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); });
+            } else {
+                body.classList.remove('dark');
+                body.classList.add('light');
+                themeIcons.forEach(icon => { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); });
+            }
+        }
+
+        // Navigation management
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('[id$=\"-page\"]');
+            pages.forEach(page => page.classList.add('hidden'));
+            // Show selected page
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) { targetPage.classList.remove('hidden'); }
+            // Update navigation active state
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            const activeNavItem = document.querySelector(`[data-page=\"${pageId}\"]`);
+            if (activeNavItem) { activeNavItem.classList.add('active'); }
+        }
+
+        // Initialize charts (UPDATED for 4 employees: Engineering has 2)
+        function initializeCharts() {
+            // Attendance Chart
+            const attendanceCtx = document.getElementById('attendanceChart');
+            if (attendanceCtx) {
+                new Chart(attendanceCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Attendance Rate',
+                            data: [95, 92, 96, 94, 97, 89, 85],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+                });
+            }
+
+            // Department Chart (Engineering now has 2 employees)
+            const departmentCtx = document.getElementById('departmentChart');
+            if (departmentCtx) {
+                new Chart(departmentCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Engineering', 'Marketing', 'Sales'],
+                        datasets: [{ data: [2, 1, 1], backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'] }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            }
+
+            // Salary Chart (BDT, thousands)
+            const salaryCtx = document.getElementById('salaryChart');
+            if (salaryCtx) {
+                new Chart(salaryCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Salary Expenditure (thousand BDT)',
+                            data: [195, 205, 200, 208, 212, 210],
+                            backgroundColor: '#3b82f6'
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true } } }
+                });
+            }
+
+            // Department Performance Chart (3 departments)
+            const deptPerfCtx = document.getElementById('departmentPerformanceChart');
+            if (deptPerfCtx) {
+                new Chart(deptPerfCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Engineering', 'Marketing', 'Sales'],
+                        datasets: [{
+                            label: 'Performance Score',
+                            data: [92, 88, 95],
+                            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b']
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+                });
+            }
+        }
+
+        // Check if external resources loaded properly
+        function checkResourcesLoaded() {
+            // Check if Tailwind CSS loaded
+            const testElement = document.createElement('div');
+            testElement.className = 'hidden';
+            document.body.appendChild(testElement);
+            const isHidden = window.getComputedStyle(testElement).display === 'none';
+            document.body.removeChild(testElement);
+            if (!isHidden) {
+                console.warn('Tailwind CSS may not have loaded properly');
+                const fallbackCSS = `
+                    .hidden { display: none !important; }
+                    .flex { display: flex !important; }
+                    .grid { display: grid !important; }
+                    .block { display: block !important; }
+                    .w-full { width: 100% !important; }
+                    .h-full { height: 100% !important; }
+                    .min-h-screen { min-height: 100vh !important; }
+                    .p-4 { padding: 1rem !important; }
+                    .p-6 { padding: 1.5rem !important; }
+                    .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
+                    .py-3 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+                    .mb-4 { margin-bottom: 1rem !important; }
+                    .mb-6 { margin-bottom: 1.5rem !important; }
+                    .text-center { text-align: center !important; }
+                    .text-white { color: white !important; }
+                    .bg-blue-600 { background-color: #2563eb !important; }
+                    .rounded-lg { border-radius: 0.5rem !important; }
+                    .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
+                    .border { border: 1px solid #e5e7eb !important; }
+                    .cursor-pointer { cursor: pointer !important; }
+                `;
+                const style = document.createElement('style');
+                style.textContent = fallbackCSS;
+                document.head.appendChild(style);
+            }
+
+            // Check if Chart.js loaded
+            if (typeof Chart === 'undefined') {
+                console.warn('Chart.js may not have loaded properly');
+                const chartContainers = document.querySelectorAll('.chart-container');
+                chartContainers.forEach(container => {
+                    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:200px;background:#f3f4f6;border-radius:8px;color:#6b7280;">Chart unavailable - external resource failed to load</div>';
+                });
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkResourcesLoaded, 1000);
+            // Login form
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                initializeCharts();
+            });
+
+            // Theme toggles
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            document.getElementById('theme-toggle-login').addEventListener('click', toggleTheme);
+
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('main-app').classList.add('hidden');
+                document.getElementById('login-page').classList.remove('hidden');
+            });
+
+            // Navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    showPage(pageId);
+                });
+            });
+
+            // Sidebar toggle for mobile
+            document.getElementById('sidebar-toggle').addEventListener('click', function() {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('open');
+            });
+
+            // Profile dropdown
+            document.getElementById('profile-dropdown').addEventListener('click', function() {
+                const menu = document.getElementById('profile-menu');
+                menu.classList.toggle('hidden');
+            });
+
+            // Employee modal
+            document.getElementById('add-employee-btn').addEventListener('click', function() {
+                document.getElementById('employee-modal').classList.remove('hidden');
+            });
+            document.getElementById('cancel-employee-btn').addEventListener('click', function() {
+                document.getElementById('employee-modal').classList.add('hidden');
+            });
+            document.getElementById('employee-modal').addEventListener('click', function(e) {
+                if (e.target === this) { this.classList.add('hidden'); }
+            });
+
+            // Close profile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const profileDropdown = document.getElementById('profile-dropdown');
+                const profileMenu = document.getElementById('profile-menu');
+                if (!profileDropdown.contains(e.target)) { profileMenu.classList.add('hidden'); }
+            });
+
+            // Initialize charts after a short delay to ensure DOM is ready
+            setTimeout(initializeCharts, 100);
+        });
+    </script>
+  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992af022b4827e60',t:'MTc2MTE1NjQ4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+ </body>
+</html>
