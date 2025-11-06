@@ -81,18 +81,6 @@ managely-hrms/
 2. Serve the `index.html` file through a web server
 3. Open the application in your browser
 
-### Local Development
-```bash
-# Using Python
-python -m http.server 8000
-
-# Using Node.js
-npx serve .
-
-# Using PHP
-php -S localhost:8000
-```
-
 ## 💻 Usage
 
 ### Portal Selection
@@ -251,6 +239,12 @@ Modify CSS custom properties for brand colors:
 **Project Type:** Frontend Prototype  
 **Email:** arefinzamandev@gmail.com  
 
+## 📞 Support
+
+For support, email arefinzamandev@gmail.com or create an issue in the repository.
+
+---
+
 ## 📄 License
 
 This project is open-source and available under the **MIT License**.  
@@ -263,11 +257,5 @@ You’re free to modify and distribute it with proper credit.
 - Chart.js for data visualization
 - Font Awesome for icons
 - The open-source community for inspiration and tools
-
-## 📞 Support
-
-For support, email arefinzamandev@gmail.com or create an issue in the repository.
-
----
 
 **Note**: This is a frontend demonstration. For production use, integrate with a backend system for data persistence, authentication, and business logic.
